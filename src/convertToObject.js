@@ -6,7 +6,35 @@
  * @return {object}
  */
 function convertToObject(sourceString) {
-  // write your code here
+  const newArr = sourceString.split(';');
+  const obj = {};
+
+  for (let x = 0; x < newArr.length; x++) {
+    if (newArr[x]) {
+      const strArr = Array.from(newArr[x]);
+
+      if (strArr[0] === ' ' || strArr[0] === '\n' || strArr[0] === '\t') {
+        strArr.shift();
+        newArr[x] = strArr.join('');
+        x--;
+      }
+    }
+  }
+
+  const cleanArr = newArr.filter((el) => el !== '');
+  let keyValue = [];
+
+  for (const i of cleanArr) {
+    keyValue = i.split(':');
+
+    const fieldName = keyValue[0].replaceAll(/|\n|\t/gi, '').trim();
+    const valueName = keyValue[1].replaceAll(/|\n|\t/gi, '').trim();
+
+    valueName.replaceAll(',', ',\n');
+    Object.assign(obj, { [fieldName]: valueName });
+  }
+
+  return obj;
 }
 
 module.exports = convertToObject;
