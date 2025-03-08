@@ -27,10 +27,9 @@ function convertToObject(sourceString) {
   for (const i of cleanArr) {
     keyValue = i.split(':');
 
-    const fieldName = keyValue[0].replaceAll(/|\n|\t/gi, '').trim();
-    const valueName = keyValue[1].replaceAll(/|\n|\t/gi, '').trim();
+    let fieldName = keyValue[0].replace(/|\n|\t/gi, '').trim();
+    let valueName = keyValue[1].replace(/|\n|\t/gi, '').trim();
 
-    valueName.replaceAll(',', ',\n');
     Object.assign(obj, { [fieldName]: valueName });
   }
 
